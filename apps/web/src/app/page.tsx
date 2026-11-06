@@ -15,6 +15,7 @@ import { optionalSession } from "@/server/auth/guard";
 import { deploymentProof, networkBadge, sampleReplay, type SampleReplay } from "@/server/services/landing";
 import { RoqquLiquidityEngine, RoleOnboardingSection, VideoDemoShowcase } from "@/components/public/roqqu-showcase";
 import { AiZeroTrustSchematic } from "@/components/public/ai-schematic";
+import { EscrowFlowSimulator } from "@/components/public/escrow-flow-simulator";
 import styles from "./landing.module.css";
 
 export const metadata: Metadata = {
@@ -144,7 +145,7 @@ export default async function LandingPage() {
             <div className={styles.pitch}>
               <div className={styles.corridorBadge}>
                 <span className={styles.corridorDot} />
-                <span>Africa Trade Corridor · Roqqu Liquidity Bridge ($1 = ₦1,350) · Stellar Escrow</span>
+                <span>Africa Trade Corridor · Roqqu Liquidity Bridge</span>
               </div>
               <h1 id="hero-title" className={styles.headline}>
                 Trade agreements that know when to pay.
@@ -170,6 +171,9 @@ export default async function LandingPage() {
 
         {/* Dedicated Roqqu Liquidity & Architecture Section */}
         <RoqquLiquidityEngine />
+
+        {/* Interactive Escrow Flow Simulator (Funding -> Neutral Lockbox -> AI/Signatures -> Roqqu Payout / Refund) */}
+        <EscrowFlowSimulator />
 
         {/* AI Multimodal Vision & Zero-Trust Governance Schematic */}
         <AiZeroTrustSchematic />
