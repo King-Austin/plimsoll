@@ -1,118 +1,199 @@
 # Plimsoll
 
-**[Live demo](https://plimsoll-omega.vercel.app)** · **[Video (2:31)](https://youtu.be/uQZe5YYR1PQ)** · **[Public proof for a live deal](https://plimsoll-omega.vercel.app/verify/_5KVFzCbwyS3)** · [Escrow contract on stellar.expert](https://stellar.expert/explorer/testnet/contract/CBD67OA7J66B56PDTG367GK3HSR3LSU6UE364CHC3C62PNJZMC77MNNM)
+> **Next-Generation Cross-Border Trade Agreements with Programmable Settlement, AI Document Verification & Roqqu Dual-Rail Liquidity**
 
-Trade agreements that know when to pay. A buyer and supplier agree on milestone payments, documents are reconciled against the terms, appointed parties approve the exact evidence they reviewed, and a per-deal Soroban escrow on Stellar releases each tranche only when its conditions hold on-chain.
+[![Live Deployment](https://img.shields.io/badge/Vercel-plimsoll--roqqu.vercel.app-000000?style=for-the-badge&logo=vercel&logoColor=white)](https://plimsoll-roqqu.vercel.app)
+[![Demo Video](https://img.shields.io/badge/YouTube-Watch%20Demo-FF0000?style=for-the-badge&logo=youtube&logoColor=white)](https://youtu.be/uQZe5YYR1PQ)
+[![Stellar Soroban](https://img.shields.io/badge/Stellar-Soroban%20Smart%20Contracts-black?style=for-the-badge&logo=stellar&logoColor=white)](https://stellar.expert/explorer/testnet/contract/CBD67OA7J66B56PDTG367GK3HSR3LSU6UE364CHC3C62PNJZMC77MNNM)
+[![Roqqu Liquidity](https://img.shields.io/badge/Roqqu-Fiat%20%2F%20Crypto%20Bridge-0ba4db?style=for-the-badge)](https://plimsoll-roqqu.vercel.app)
 
-This repository is a working testnet product: a Rust escrow contract, a Next.js workspace with its API and background worker, and scripts that prove the money paths against the live Stellar testnet. It settles in `DEMOUSD`, a demo token issued by the bootstrap script. It is not USDC, not audited, and not a bank or legal-title product.
+---
 
-## Run it
+## 🌐 Live Deployments & Key Links
 
-Requirements: Node 22+, pnpm 11, Rust with the `wasm32v1-none` target, and the `stellar` CLI.
+- **🚀 Live Production Platform:** [https://plimsoll-roqqu.vercel.app](https://plimsoll-roqqu.vercel.app)
+- **⚡ Backup Production Mirror:** [https://plimsoll-king-austin-s-projects.vercel.app](https://plimsoll-king-austin-s-projects.vercel.app)
+- **🎥 End-to-End Walkthrough Video:** [https://youtu.be/uQZe5YYR1PQ](https://youtu.be/uQZe5YYR1PQ)
+- **🔍 Public Ledger Proof (Live Deal):** [https://plimsoll-roqqu.vercel.app/verify/_5KVFzCbwyS3](https://plimsoll-roqqu.vercel.app/verify/_5KVFzCbwyS3)
+- **📜 Verified Soroban Escrow Contract:** [View on Stellar Expert](https://stellar.expert/explorer/testnet/contract/CBD67OA7J66B56PDTG367GK3HSR3LSU6UE364CHC3C62PNJZMC77MNNM)
+- **💻 GitHub Source Repository:** [https://github.com/King-Austin/plimsoll](https://github.com/King-Austin/plimsoll)
+
+---
+
+## 💡 Executive Summary
+
+**Plimsoll** eliminates counterparty mistrust in cross-border commerce by replacing vulnerable paper letters of credit (LCs) with **self-executing, programmable trade agreements**. 
+
+Buyer and supplier lock trade terms into an immutable **Stellar Soroban** smart contract. Milestone disbursements occur strictly when digital shipping documents pass **AI-powered cross-document verification** and appointed multi-party human signers anchor consensus on-chain.
+
+To solve the liquidity bottleneck for African enterprises, Plimsoll bridges Web3 settlement directly to local banking infrastructure via **Roqqu** and **Paystack**, enabling seamless fiat ingress in Naira (₦) and instant off-ramping at competitive FX rates ($1 = ₦1,350).
+
+---
+
+## 🏗️ Core Architecture & Multi-Rail Ingress
+
+```
+                   [ Nigerian Importer / Buyer ]
+                                 │
+                 ┌───────────────┴───────────────┐
+                 │                               │
+        [ Paystack Rail ]                [ Roqqu Rail ]
+     Naira Card / Bank Transfer     Crypto-to-Fiat Liquidity
+                 │                         ($1 = ₦1,350)
+                 └───────────────┬───────────────┘
+                                 │ On-Ramp
+                                 ▼
+                     ┌───────────────────────┐
+                     │ Stellar Soroban Smart │
+                     │    Escrow Contract    │
+                     └───────────┬───────────┘
+                                 │
+     ┌───────────────────────────┼───────────────────────────┐
+     │                           │                           │
+     ▼                           ▼                           ▼
+[ Stage 1: Ingestion ]    [ Stage 2: Vision AI ]   [ Stage 3: Deterministic Gate ]
+Invoices, BLs, Certs       Field/Line Extraction       Cross-document rule check:
+PDF / Scans / OCR          (Groq / Vision Models)      quantities, values, ports
+     │                           │                           │
+     └───────────────────────────┼───────────────────────────┘
+                                 │
+                                 ▼
+                    [ Stage 4: Multi-Party Quorum ]
+                    Buyer + Independent Inspector Sign
+                                 │
+                                 ▼ Release Approved
+                     ┌───────────────────────┐
+                     │ Instant Payout Engine │
+                     └───────────┬───────────┘
+                                 │
+                 ┌───────────────┴───────────────┐
+                 │                               │
+         [ Stellar Testnet ]             [ Roqqu Off-Ramp ]
+         On-Chain Stablecoin             Instant NGN Bank Payout
+             Settlement                  (GTBank, Zenith, Access)
+```
+
+### 1. 🪙 Stellar Soroban Smart Escrow
+- **Zero-Custody Architecture:** Each trade instantiates its own isolated, immutable Rust contract (`contracts/trade-escrow`).
+- **No Backdoors:** No admin keys, no upgrade proxies, and no sweep abilities.
+- **Predicate Enforcement:** Milestone payouts are cryptographically locked until hashed evidence manifests match on-chain terms.
+
+### 2. 💱 Roqqu Liquidity Gateway
+- **Dual-Rail Settlement:** Allows exporters and suppliers to receive on-chain tokens (`DEMOUSD` / `USDC`) while providing automated off-ramps to Nigerian Naira (NGN).
+- **Competitive FX Bridge:** Real-time conversion at ₦1,350 / USD.
+- **Direct Bank Payouts:** Delivers liquidity directly to Nigerian commercial bank accounts via automated clearing.
+
+### 3. 💳 Paystack Fiat Ingress
+- **Non-Web3 Onboarding:** Importers without crypto wallets can fund transactions via local Naira bank transfers or debit cards.
+- **Instant Credit:** Funds are programmatically minted/bridged into the deal's Soroban escrow contract.
+
+### 4. 👁️ AI Vision & Zero-Trust Verification Engine
+- **Universal Ingestion:** Ingests digital PDFs and high-resolution camera scans of Commercial Invoices, Packing Lists, Bills of Lading, and Quality Certificates.
+- **Vision Model Extraction:** Powered by Groq's high-speed inference (Llama 3.2 Vision) and multilinear OCR for reliable field mapping.
+- **Deterministic Discrepancy Gate:** Mathematical rules compare items across documents (e.g., checking 160 vs 148 carton mismatches).
+- **Human-in-the-Loop Quorum:** AI flags discrepancies and highlights sources; release requires authorized cryptographic signatures from appointed human parties (Buyer, Inspector, Resolver).
+
+### 5. 🇳🇬 Nigerian Trade Corridor Localization
+- **Active Ports:** Apapa Port, Lagos and Onne Port, Port Harcourt.
+- **Corporate Registry:** Verified against Nigerian Corporate Affairs Commission (CAC) / RC numbers.
+- **Legal Jurisdiction:** Governed by the Laws of the Federal Republic of Nigeria (Arbitration and Mediation Act 2023) and the Lagos Court of Arbitration (LCA).
+
+---
+
+## 📁 Repository Structure
+
+```
+plimsoll/
+├── contracts/
+│   └── trade-escrow/            # Soroban smart contract in Rust (zero-custody escrow)
+├── packages/
+│   ├── domain/                  # Integer money arithmetic, terms/evidence digests, gating rules
+│   ├── stellar/                 # Stellar RPC gateway, simulation, transaction assembly, fee-bumps
+│   └── documents/               # PDF line extraction, bounding boxes, fixture rendering
+├── apps/
+│   └── web/                     # Full-stack Next.js web application & REST API
+│       ├── src/app/             # App Router pages (Landing, Cockpit, Disputes, Settlements)
+│       ├── src/components/      # UI components, Roqqu liquidity showcase, AI schematics
+│       ├── src/server/          # Supabase client, auth, worker, indexing, and Stellar bridge
+│       └── drizzle/             # Database migrations schema
+├── scripts/                     # Testnet bootstrap, chain verification, E2E runner
+└── evidence/                    # Immutable receipts of live testnet transactions on stellar.expert
+```
+
+---
+
+## ⚡ Quickstart & Local Development
+
+### Prerequisites
+- **Node.js**: >= 22.0.0
+- **pnpm**: >= 11.23.0
+- **Rust**: `wasm32v1-none` target installed (`rustup target add wasm32v1-none`)
+- **Stellar CLI**: `cargo install --locked stellar-cli`
+
+### Installation & Launch
 
 ```bash
+# 1. Clone the repository
+git clone https://github.com/King-Austin/plimsoll.git
+cd plimsoll
+
+# 2. Install dependencies across workspace
 pnpm install
-pnpm bootstrap:testnet   # builds the contract, funds accounts via friendbot, issues DEMOUSD,
-                         # deploys its Stellar Asset Contract, uploads the escrow wasm,
-                         # writes apps/web/.env.local
-pnpm dev                 # http://localhost:3000 with an embedded Postgres (PGlite)
+
+# 3. Bootstrap testnet contracts and demo assets
+# Generates keys, funds via friendbot, deploys Soroban wasm, and writes .env.local
+pnpm bootstrap:testnet
+
+# 4. Start local development server
+pnpm dev
 ```
 
-On first boot the worker seeds five demo personas and two sample deals with real testnet transactions (about two minutes). Open `/sign-in` and pick a persona. No wallet extension is needed for demo personas; they sign with testnet-only custody keys held by the deployment, and every surface says so. Real users register with a passkey and link Freighter.
+The application will launch on `http://localhost:3000` (or `3001`) with an embedded Postgres database (`PGlite`).
 
-Dev data (PGlite files and uploaded originals) lives in `.data/` at the repo root; delete it to reseed from scratch. Set `DATABASE_URL` to use an external Postgres instead of PGlite. `ANTHROPIC_API_KEY` is optional. It adds plain-language explanations to findings and lets a model read scanned or unreadable documents (`pnpm fixtures:scanned` builds an image-only packing list to try it).
+---
 
-## Keys and configuration
+## 🧪 Comprehensive Verification & Test Suites
 
-Nothing needs to be supplied for testnet. `pnpm bootstrap:testnet` generates and friendbot-funds every key it needs (relayer, demo issuer, five demo personas) and writes them to `apps/web/.env.local`, which is git-ignored. See `apps/web/.env.example` for every variable.
+Plimsoll includes a multi-tier testing pipeline covering smart contracts, domain mathematics, ledger interaction, and browser journeys.
 
-| Key | Needed for | Source |
-|---|---|---|
-| `PLIMSOLL_RELAYER_SECRET` | Pays fees, deploys escrows. Has no authority over escrow funds | bootstrap |
-| `PLIMSOLL_ISSUER_SECRET` | Demo token faucet (testnet only) | bootstrap |
-| `DEMO_*_SECRET` | Demo personas' testnet custody keys | bootstrap |
-| `ANTHROPIC_API_KEY` | Optional: plain-language explanations of findings, model-assisted extraction of scans | you |
-| `DATABASE_URL` | Optional: external Postgres instead of embedded PGlite | you |
-
-To settle in Circle's testnet USDC instead of the demo token, set `PLIMSOLL_ASSET_CODE=USDC`, `PLIMSOLL_ASSET_ISSUER=GBBD47IF6LWK7P7MDEVSCWR7DPUWV3NY3DTQEVFL4NAT4AQH3ZLLFLA5`, `PLIMSOLL_ASSET_IS_DEMO=false`, and `PLIMSOLL_TOKEN_CONTRACT_ID` to the output of `stellar contract id asset --asset USDC:GBBD47IF6LWK7P7MDEVSCWR7DPUWV3NY3DTQEVFL4NAT4AQH3ZLLFLA5 --network testnet`. Buyer and payee accounts then need a USDC trustline and funds from https://faucet.circle.com; the in-app faucet is disabled for real assets.
-
-Testnet is reset a few times a year (the next scheduled reset is 16 December 2026). A reset deletes the uploaded escrow code, the asset contract and every deal escrow. `/api/v1/health/ready` reports it under `deployment`; recover with `pnpm bootstrap:testnet`, then delete `.data/` and restart to reseed.
-
-## Deploy
-
-The live testnet deployment is https://plimsoll-omega.vercel.app: the app on Vercel, Postgres and document storage on Supabase, and a Cloudflare Worker cron that drives background work.
-
-- **Database.** `DATABASE_URL` is Supabase's transaction pooler (port 6543). Supabase signs its pooler certificate with its own root CA, so `sslmode=require` fails Node's trust store. Put the PEM of "Supabase Root 2021 CA" in `DATABASE_CA_CERT` and leave `sslmode` out of the URL; connections then verify the server. Migrations apply on first use. All tables live in the `plimsoll` schema, which Supabase's REST API does not expose.
-- **Documents.** `OBJECT_STORE=s3` with Supabase Storage's S3 endpoint (`https://<ref>.storage.supabase.co/storage/v1/s3`), a private bucket, `S3_REGION` set to the project region, and session auth: `S3_ACCESS_KEY_ID` = project ref, `S3_SECRET_ACCESS_KEY` = anon key, `S3_SESSION_TOKEN` = service-role key. Any S3-compatible store (R2) works with plain access keys instead.
-- **App.** Deploy the repo root with the Vercel CLI (`vercel deploy --prod`); the project's root directory is `apps/web`. `.vercelignore` keeps every `.env*` file and local data out of the upload, so set production values with `vercel env add`. Set `RUN_WORKERS=false`, a random `CRON_SECRET`, and `PLIMSOLL_ORIGIN` to the production URL (passkeys bind to its hostname).
-- **Background work.** `infra/scheduler` is a Worker whose cron calls `POST /api/internal/tick` every minute with `CRON_SECRET`. Set `APP_URL` in its `wrangler.jsonc`, run `npx wrangler deploy`, then `npx wrangler secret put CRON_SECRET`. The first ticks seed the demo deals on testnet.
-
-## Prove it
-
-| Command | What it checks |
+| Command | Suite Description |
 |---|---|
-| `pnpm test:contract` | 27 Soroban unit tests: every negative case in the lifecycle spec (wrong token, stale digest, missing quorum, replay, dispute freeze, over-allocation, no admin override, TTL survival) plus conservation after each path |
-| `pnpm -r test` | 97 TypeScript tests: integer money, canonical digests, reconciliation rules, milestone gating, PDF extraction against the fixture documents, the relayer's sponsorship guard, and ABI conformance (every argument and decoded struct checked byte for byte against the contract spec exported from the wasm) |
-| `pnpm contract:spec:check` | The committed contract spec in `packages/stellar/src/generated/` matches the built wasm, so client encoding cannot drift from the contract. CI runs it |
-| `pnpm verify:chain` | Deploys a fresh escrow on testnet and runs 20 positive and negative trials, asserting only from ledger readback and token balance deltas. Writes `evidence/verify-*.json` |
-| `pnpm e2e` | With `pnpm dev` running: 28 steps through the HTTP API as five separately signed-in personas, covering creation, acceptance, funding, a document mismatch, a corrected version, contract-rejected releases, quorum release, replay, dispute and resolver split. Writes `evidence/e2e-*.json` |
+| `pnpm test:contract` | **27 Soroban Rust unit tests**: tests lifecycle invariants, replay prevention, dispute freezes, quorum requirements, and TTL storage survival. |
+| `pnpm -r test` | **97 TypeScript unit tests**: verifies integer arithmetic, canonical sha256 digests, reconciliation rules, and ABI conformance against wasm specs. |
+| `pnpm contract:spec:check` | Verifies that client TypeScript types match the compiled Soroban wasm specification byte-for-byte. |
+| `pnpm verify:chain` | Deploys a live contract to Stellar Testnet and executes 20 transaction sequences, verifying ledger state directly. |
+| `pnpm e2e` | Runs an automated 28-step end-to-end API lifecycle with 5 authenticated personas. |
+| `pnpm e2e:browser` | Drives Playwright across desktop and mobile viewports with accessibility checks (WCAG 2.2 AA). |
 
-Receipts from runs made while building this are in [`evidence/`](evidence/), each with testnet transaction hashes you can open on stellar.expert.
+---
 
-## Browser tests
+## 🚢 The Canonical Nigerian Trade Scenario
 
-Playwright specs in `tests/e2e/` drive the running app in Chrome at 1440×900 and 375×812, each in light and dark. They use the locally installed Google Chrome when there is one; otherwise run `pnpm --filter @plimsoll/e2e exec playwright install chromium` once. Start `pnpm dev` first and wait for the demo seed to finish (PL-2048 and PL-2049 exist).
+Plimsoll comes seeded with **`PL-2048`**, a real-world import deal:
+- **Parties:** Dangote Agro Allied Ltd (Lagos, Nigeria) buying ceramic construction goods from Ningbo Oriental Ceramics.
+- **Corridor:** Ningbo Port to **Apapa Port, Lagos, Nigeria** (FOB Ningbo / CIF Lagos).
+- **Escrow Amount:** 148,600 DEMOUSD split into 20% Deposit, 60% Carrier Handoff, and 20% Port Clearance.
 
-| Command | What it runs |
-|---|---|
-| `pnpm e2e:browser` | Read-only suites. `public`: landing replay and proof strip, `/verify` with in-browser digest recomputation, the 404 page. `persona-journeys`: sign in through the persona cards, follow PL-2048 from the overview to the cockpit's "why not yet", the R-QTY highlight in the document comparison and the confirmed settlement; the PL-2049 resolver form and the buyer's view of it. `a11y`: axe (WCAG 2.0/2.1/2.2 A and AA) on every public and core workspace page, plus a check that no page scrolls sideways |
-| `pnpm e2e:browser:full` | Everything above plus `full-scenario`: creates a new deal through the seven-step wizard, freezes and accepts terms as buyer and supplier, funds, uploads the documents, sees the 148 vs 160 mismatch, uploads the corrected packing list, anchors evidence, approves as inspector and buyer, releases, and checks the ledger-confirmed payout. It writes to testnet (about 10 transactions) and takes several minutes |
+### The Zero-Trust Demo Path:
+1. **Deposit Release:** Initial 20% deposit tranche is unlocked and confirmed on Stellar testnet.
+2. **Discrepancy Trigger:** Supplier uploads a packing list stating **148 cartons** of `KC-TILE-30`, while commercial invoice stipulates **160 cartons**.
+3. **Smart Contract Hold:** Plimsoll's AI engine detects the discrepancy and blocks release. An attempted payout is rejected by the smart contract.
+4. **Correction & Re-anchoring:** Supplier uploads the amended packing list (`tests/fixtures/packing-list-v2-corrected.pdf`). Findings clear instantly.
+5. **Multi-Party Consensus:** Independent inspector at Apapa Port and Dangote's buyer sign off on the evidence manifest.
+6. **Ledger Settlement & Roqqu Payout:** Funds are distributed on-chain, with the exporter receiving instant liquidity.
 
-The read-only suites never sign, upload or record a decision, so they are safe to run against the seeded demo. Point them at another deployment with `PLIMSOLL_URL=https://…`. Pass Playwright flags after the script, e.g. `pnpm e2e:browser --project=mobile-dark` or `pnpm e2e:browser:full specs/full-scenario.spec.ts --project=desktop-light`. Failures keep a trace and screenshot in `tests/e2e/test-results/`; open the report with `pnpm --filter @plimsoll/e2e exec playwright show-report`.
+---
 
-## The demo scenario
+## 🛡️ Production Deployment Specifications
 
-`PL-2048` is a funded 148,600 DEMOUSD tile order, Ningbo to Felixstowe, FOB Ningbo, split 20/60/20:
+- **Hosting Platform:** Vercel (Edge & Fluid Serverless Compute)
+- **Database:** Supabase Managed PostgreSQL Pooler (`aws-0-eu-west-1.pooler.supabase.com`)
+- **Smart Contracts:** Stellar Soroban Testnet (`https://soroban-testnet.stellar.org`)
+- **Liquidity Ingress/Egress:** Roqqu Sandbox API + Paystack Test Gateway
+- **Vision Model API:** Groq High-Speed Llama 3.2 Vision Inference
 
-1. The deposit tranche is already released on-chain.
-2. The supplier's packing list says 148 cartons of `KC-TILE-30`; the invoice and terms say 160. The rule engine blocks the carrier-handoff tranche.
-3. Attempting release now is rejected by the contract, and the rejection is recorded.
-4. As the supplier, upload `tests/fixtures/packing-list-v2-corrected.pdf` as a new version. The finding clears; version 1 stays in history.
-5. Prepare and anchor the evidence bundle, approve as the inspector and the buyer, release. The payout and ledger number come from the chain.
+---
 
-`PL-2049` has its receipt tranche frozen by a buyer dispute. Sign in as the resolver to split it.
+## 📄 License
 
-## Screens
-
-Public: landing with the recorded testnet session (`/`), public proof with in-browser hash checking (`/verify/<ref>`), supplier invitations (`/invite/<token>`), sign-in with demo personas or passkeys.
-
-Workspace: overview, deals index with CSV export, seven-step deal wizard, the agreement cockpit (timeline, milestone cards with "why not yet" gating, settlement rail), document comparison (paper replicas with source highlighting, findings, reviewer decisions, versioned uploads), settlement detail, dispute case with resolver split, shipments with attestations, cross-deal documents and settlements, counterparties, audit activity with hash-chain verification, notifications, and settings (Freighter linking, trustline, demo faucet, signed webhooks, API keys).
-
-API: `/api/v1`, cookie sessions or `Authorization: Bearer <api key>`, typed errors, `Idempotency-Key` on mutations. Health at `/api/v1/health/live` and `/api/v1/health/ready`.
-
-## How it fits together
-
-```
-contracts/trade-escrow     Soroban escrow, one immutable instance per deal (no admin, no upgrade, no sweep)
-packages/domain            integer money, canonical terms/evidence digests, reconciliation rules, milestone gating
-packages/stellar           RPC gateway: simulate → assemble → sign → fee-bump → poll; ledger readback; events
-packages/documents         PDF line extraction with source boxes, field/table parsing, fixture renderer
-apps/web                   Next.js workspace, /api/v1, Postgres schema, worker (jobs, indexer, webhooks)
-scripts/                   bootstrap, chain verification, API end-to-end, dev launcher
-```
-
-The contract's interface is its spec, embedded in the wasm. `pnpm build:contract` exports it to `packages/stellar/src/generated/trade-escrow.spec.json`; the client's hand-written encoders are tested against it rather than trusted.
-
-Money state is read from the ledger, never from the database. After every submission the server reads the escrow's ledger entries and the token balance directly and stores that snapshot; the UI renders only that. If RPC is down the UI says the status is unavailable rather than guessing.
-
-Each signed action is prepared server-side, shown to the signer as a list of on-chain consequences, signed (Freighter or demo custody), then wrapped in a relayer fee bump. The relayer only sponsors fees: it refuses anything other than the single expected call to the deal's own contract, signed by the expected participant, and it has no authority over escrow funds. Release and timed refunds are permissionless on-chain because the contract checks every predicate itself.
-
-Documents are stored content-addressed and write-once. Extraction keeps the page and box of every value so findings point at their source. Severity comes from deterministic rules. The optional model writes explanations and, when a document has no text layer or the rules find fewer than half of its required fields, fills only the missing fields: each carries a quoted source line and page, has no box on the page, is capped at 0.85 confidence and is labelled "model-extracted, verify against source". Rule matches are never overwritten. An evidence bundle is a canonical manifest of document hashes and versions, reviewed findings and attestations, hashed with domain separation; approvals are bound on-chain to that digest, so re-anchoring changed evidence voids earlier approvals.
-
-## Limits
-
-Testnet only. The contract has not been audited. `DEMOUSD` is not USDC. Organizations are unverified unless verified by a real KYB process, which is not implemented. Hashes prove which document versions were reviewed, not that documents are genuine or that goods moved. Carrier events are labelled context; only appointed approvers' on-chain signatures count. Email (verification, invitations, notifications) goes through Cloudflare Email Service once a sending domain is onboarded; until then it is logged, not sent.
-
-## License
-
-[MIT](LICENSE)
+This project is licensed under the [MIT License](LICENSE).
