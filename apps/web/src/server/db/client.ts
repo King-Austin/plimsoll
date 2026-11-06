@@ -23,7 +23,16 @@ export function db(): Db {
 
 /** Applies pending migrations once per process. */
 export function ensureMigrated(): Promise<void> {
-  globalForDb.plimsollMigrated ??= migrate(db(), { migrationsFolder: path.join(/*turbopackIgnore: true*/ process.cwd(), "drizzle"), migrationsSchema: "plimsoll_migrations" });
+  globalForDb.plimsollMigrated ??= migrate(db(), {
+    migrationsFolder: path.join(/*turbopackIgnore: true*/ process.cwd(), "drizzle"),
+    migrationsSchema: "plimsoll_migrations",
+  }).catch((err: any) => {
+    if (err?.cause?.code === "42P06" || err?.cause?.code === "42P07" || String(err?.message).includes("already exists")) {
+      console.warn("Plimsoll database schema already present; skipping migration:", err?.message);
+      return;
+    }
+    throw err;
+  });
   return globalForDb.plimsollMigrated;
 }
 
